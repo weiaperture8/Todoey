@@ -32,7 +32,18 @@
                             <outlet property="delegate" destination="or1-D7-sm6" id="NJf-sR-tzQ"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="TODOEY AIR" id="bvD-Cj-2WY"/>
+                    <toolbarItems>
+                        <barButtonItem title="Item" id="7ZX-HI-ntg"/>
+                        <barButtonItem title="Item" id="sCB-4h-eZt"/>
+                    </toolbarItems>
+                    <navigationItem key="navigationItem" title="TODOEY AIR" id="bvD-Cj-2WY">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="t8u-8l-ARe">
+                            <connections>
+                                <action selector="addButtonPressed:" destination="or1-D7-sm6" id="JGm-EH-KC2"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Gb9-bd-s89" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
