@@ -63,7 +63,6 @@
 				D56302E821F763E20039A29B /* LaunchScreen.storyboard */,
 				D56302EB21F763E20039A29B /* Info.plist */,
 				D56302DD21F763E00039A29B /* Products */,
-				D56302F5220101A40039A29B /* Support File */,
 			);
 			path = Todoey;
 			sourceTree = "<group>";
@@ -83,13 +82,6 @@
 				D56302E321F763E00039A29B /* Main.storyboard */,
 			);
 			path = View;
-			sourceTree = "<group>";
-		};
-		D56302F5220101A40039A29B /* Support File */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "Support File";
 			sourceTree = "<group>";
 		};
 		D56302F6220101FB0039A29B /* Controller */ = {

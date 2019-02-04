@@ -12,13 +12,18 @@ class ToDoListViewController: UITableViewController {
     
     
     var itemArray = [Item]()
-    let defaults = UserDefaults.standard
+    let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Item.plist")
+    
+    //let defaults = UserDefaults.standard
     let defaultKey = "ToDoListSaved"
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+        loadItemList() //NSCoder Method of Loading Saved Data
+        
+        /*
         let newItem = Item()
         newItem.itemName = "Write a book"
         itemArray.append(newItem)
@@ -31,12 +36,18 @@ class ToDoListViewController: UITableViewController {
         let newItem3 = Item()
         newItem3.itemName = "Watch BBC"
         itemArray.append(newItem3)
+        */
         
         
         
-        if let newItemArray = defaults.array(forKey: defaultKey) as? [Item]{
+        
+        /*
+         
+         if let newItemArray = defaults.array(forKey: defaultKey) as? [Item]{
             itemArray = newItemArray
-        }
+        }  //userdefaults method of save item dat
+         
+         */
         
     }
 
@@ -81,8 +92,10 @@ class ToDoListViewController: UITableViewController {
  */
  
         item.done = !item.done // = ! means if item.done is false(or true) then item.done is the opposite which is true
+        
+        saveItems()
  
-        tableView.reloadData()
+        //tableView.reloadData()
         
         /*
         
@@ -114,9 +127,22 @@ class ToDoListViewController: UITableViewController {
             newItem.itemName = textField.text!
             
             self.itemArray.append(newItem)
-            self.defaults.set(self.itemArray, forKey: self.defaultKey)
+            //self.defaults.set(self.itemArray, forKey: self.defaultKey)
+            
+            self.saveItems()
+
+            /*
+            let encoder = PropertyListEncoder()
+            do{
+            let data = try encoder.encode(self.itemArray)
+                try data.write(to: self.dataFilePath!)
+            }catch{
+                print("Error encoding tiem arrayk \(error)")
+            } //need to conform to Encodable in item.swift
+            
             print(self.itemArray)
             self.tableView.reloadData()
+            */
         }
         
         
@@ -135,6 +161,35 @@ class ToDoListViewController: UITableViewController {
         
 
     }
+    
+    //MARK - Model Manipulation Methods
+    
+    func saveItems(){
+        
+        let encoder = PropertyListEncoder()
+        do{
+            let data = try encoder.encode(self.itemArray)
+            try data.write(to: dataFilePath!)
+        }catch{
+            print("Error encoding tiem arrayk \(error)")
+        } //need to conform to Encodable in item.swift
+        
+        tableView.reloadData()
+    }
+    
+    
+    func loadItemList(){
+        if let data = try? Data(contentsOf: dataFilePath!){
+        let decoder = PropertyListDecoder()
+            do{
+            itemArray = try decoder.decode([Item].self, from: data)
+            }catch{
+                print(error)
+            }
+        }
+    }
+    
+            
     
     
 }
