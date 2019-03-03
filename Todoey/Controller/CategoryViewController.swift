@@ -9,9 +9,10 @@
 import UIKit
 // import CoreData
 import RealmSwift
+//import SwipeCellKit
 
 
-class CategoryViewController: UITableViewController {
+class CategoryViewController: SwipeTableViewController{
     
     let realm = try! Realm() // No need to throw error as already throw in Appdelegate
     
@@ -31,9 +32,11 @@ class CategoryViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
         
         
+        
         print("View Did Load")
         loadCategory()
         tableView.reloadData()
+        tableView.rowHeight = 80.0
     }
 
     // MARK: - Table view data source
@@ -53,7 +56,12 @@ class CategoryViewController: UITableViewController {
         
         print("Loading Table View")
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath)
+        
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
+        
+        //let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath) as! SwipeTableViewCell
+        
+        //cell.delegate = self
         
         cell.textLabel?.text = categoryArray?[indexPath.row].name ?? "No Categories Added Yet" // if categoryArray is not nil then return categoryArray else return message "No Categories Added Yet"
         
@@ -62,6 +70,9 @@ class CategoryViewController: UITableViewController {
         return cell
         
     }
+    
+    
+    
 
     //MARK: - Data manipulation method
     
@@ -97,6 +108,28 @@ class CategoryViewController: UITableViewController {
 //            print("Error fetching category data: \(error)")
 //        }
 ----- from coredata */
+    }
+    
+    
+    //Delete Method -- Inherited from Superclass
+    
+    override func updateDB(at indexPath: IndexPath) {
+        
+        
+        
+                    if let categoryForDeletion = self.categoryArray?[indexPath.row]{
+                        do{
+                            try self.realm.write {
+                                self.realm.delete(categoryForDeletion)
+                            }
+                        }catch{
+        
+                            print("Error deleting cell: \(error)")
+                        }
+        
+                        //tableView.reloadData()
+                    }
+        
     }
     
     
@@ -144,6 +177,8 @@ class CategoryViewController: UITableViewController {
             
             //destinVC.selectedCategory = categoryArray[indexPath.row] -- CoreData
             destinVC.selectedCategory = categoryArray?[indexPath.row] //savely unwrap fro Realm
+            
+            print("Segue Success")
         }
     }
         /*
@@ -155,3 +190,46 @@ class CategoryViewController: UITableViewController {
     
     
 }
+
+
+//extension CategoryViewController: SwipeTableViewCellDelegate {
+//
+//    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
+//
+//
+//        guard orientation == .right else {return nil}
+//
+//        let deleteAction = SwipeAction(style: .destructive, title: "Delete") {action, indexPath in
+//
+//            if let categoryForDeletion = self.categoryArray?[indexPath.row]{
+//                do{
+//                    try self.realm.write {
+//                        self.realm.delete(categoryForDeletion)
+//                        }
+//                }catch{
+//
+//                    print("Error deleting cell: \(error)")
+//                }
+//
+//                //tableView.reloadData()
+//            }
+//
+//            print("item deleted")
+//
+//
+//        }
+//
+//        deleteAction.image = UIImage(named: "delete")
+//        return [deleteAction]
+//    }
+//
+//
+//    func tableView(_ tableView: UITableView, editActionsOptionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeOptions {
+//
+//        var options = SwipeOptions()
+//        options.expansionStyle = .destructive
+//        options.transitionStyle = .border
+//        return options
+//    }
+//
+//}

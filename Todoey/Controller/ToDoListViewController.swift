@@ -12,7 +12,7 @@ import RealmSwift
 
 
 
-class ToDoListViewController: UITableViewController {
+class ToDoListViewController: SwipeTableViewController {
     
     let realm = try! Realm()
     
@@ -31,7 +31,7 @@ class ToDoListViewController: UITableViewController {
     
     let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Item.plist")
     
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    //let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     //let appDelegate = UIApplication.shared.delgate as! AppDelegate
     
@@ -42,6 +42,9 @@ class ToDoListViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tableView.rowHeight = 70.0
+        
         // Do any additional setup after loading the view, typically from a nib.
         
         //loadItemList() //NSCoder Method of Loading Saved Data
@@ -64,7 +67,7 @@ class ToDoListViewController: UITableViewController {
         
         //searchBar.delegate = self
         // loadItemList() - loaded with var selectedCategory
-        tableView.reloadData()
+        //tableView.reloadData()
         
         /*
          
@@ -74,6 +77,7 @@ class ToDoListViewController: UITableViewController {
          
          */
         
+        
     }
 
 
@@ -81,10 +85,11 @@ class ToDoListViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return toDoItems?.count ?? 1
+        
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "todoeyCell")!
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
         
         if let item = toDoItems?[indexPath.row]{
         
@@ -95,8 +100,9 @@ class ToDoListViewController: UITableViewController {
         //cell.textLabel?.text = itemArray[indexPath.row].itemName
             
 
-            cell.accessoryType = item.done ? .checkmark : .none
-            
+        cell.accessoryType = item.done ? .checkmark : .none
+        
+        
             
         }else{
             cell.textLabel?.text = "No item added yet!"
@@ -111,6 +117,8 @@ class ToDoListViewController: UITableViewController {
 //            cell.textLabel?.text = "No Item Added Yet"
 //        }
         return cell
+        
+        
     }
     
     
@@ -118,6 +126,8 @@ class ToDoListViewController: UITableViewController {
     //MARK - Table View Delegate Methods
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+       
         
         
         if let item = toDoItems?[indexPath.row]{
@@ -315,6 +325,7 @@ class ToDoListViewController: UITableViewController {
     
     func loadItemList(){
         
+        
         toDoItems = selectedCategory?.items.sorted(byKeyPath: "title", ascending: true)
         tableView.reloadData()
         
@@ -361,6 +372,22 @@ class ToDoListViewController: UITableViewController {
 //        }
    
     }
+    
+    
+    // Deleting ToDo Item
+    
+    override func updateDB(at indexPath: IndexPath) {
+        if let items = toDoItems?[indexPath.row]{
+            do{
+                try realm.write {
+                    realm.delete(items)
+                }
+            }catch{
+                print("Error deleting items:\(error)")
+            }
+        }
+    }
+    
             
     
     

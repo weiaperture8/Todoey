@@ -18,6 +18,7 @@
 		D5E63FDF22259F1C00315FF9 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E63FDE22259F1C00315FF9 /* Item.swift */; };
 		D5E63FE122259F2A00315FF9 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E63FE022259F2A00315FF9 /* Category.swift */; };
 		D5E63FE322292BAE00315FF9 /* RealmMigration.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E63FE222292BAE00315FF9 /* RealmMigration.swift */; };
+		D5FC461E222BD83C00E50AB2 /* SwipeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FC461D222BD83C00E50AB2 /* SwipeTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +36,7 @@
 		D5E63FDE22259F1C00315FF9 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		D5E63FE022259F2A00315FF9 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		D5E63FE222292BAE00315FF9 /* RealmMigration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmMigration.swift; sourceTree = "<group>"; };
+		D5FC461D222BD83C00E50AB2 /* SwipeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeTableViewController.swift; sourceTree = "<group>"; };
 		FD0D4786492D8DF4EF294878 /* Pods-Todoey.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Todoey.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Todoey/Pods-Todoey.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -113,6 +115,7 @@
 		D56302F6220101FB0039A29B /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				D5FC461D222BD83C00E50AB2 /* SwipeTableViewController.swift */,
 				D566A8ED221222F3001D40FA /* CategoryViewController.swift */,
 				D56302E121F763E00039A29B /* ToDoListViewController.swift */,
 				D5E63FE222292BAE00315FF9 /* RealmMigration.swift */,
@@ -252,6 +255,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D5FC461E222BD83C00E50AB2 /* SwipeTableViewController.swift in Sources */,
 				D566A8EE221222F3001D40FA /* CategoryViewController.swift in Sources */,
 				D5E63FDD22258ED900315FF9 /* Data.swift in Sources */,
 				D5E63FE322292BAE00315FF9 /* RealmMigration.swift in Sources */,
